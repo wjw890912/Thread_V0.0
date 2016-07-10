@@ -1,0 +1,11 @@
+.\obj\serial.o: ..\Thread\drivers\serial.c
+.\obj\serial.o: ..\Thread\drivers\serial.h
+.\obj\serial.o: ..\Thread\include\rthw.h
+.\obj\serial.o: ..\Thread\include\rtthread.h
+.\obj\serial.o: ..\Thread\include\rtdef.h
+.\obj\serial.o: ..\Thread\include\rtconfig.h
+.\obj\serial.o: E:\Keil\ARM\RV31\INC\stdarg.h
+.\obj\serial.o: ..\Thread\include\rtdebug.h
+.\obj\serial.o: ..\Thread\include\rtservice.h
+.\obj\serial.o: ..\Thread\include\rtm.h
+.\obj\serial.o: ..\Thread\include\rtthread.h

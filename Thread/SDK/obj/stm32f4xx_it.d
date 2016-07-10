@@ -1,0 +1,10 @@
+.\obj\stm32f4xx_it.o: ..\Thread\drivers\stm32f4xx_it.c
+.\obj\stm32f4xx_it.o: ..\Thread\include\rtthread.h
+.\obj\stm32f4xx_it.o: ..\Thread\include\rtdef.h
+.\obj\stm32f4xx_it.o: ..\Thread\include\rtconfig.h
+.\obj\stm32f4xx_it.o: E:\Keil\ARM\RV31\INC\stdarg.h
+.\obj\stm32f4xx_it.o: ..\Thread\include\rtdebug.h
+.\obj\stm32f4xx_it.o: ..\Thread\include\rtservice.h
+.\obj\stm32f4xx_it.o: ..\Thread\include\rtm.h
+.\obj\stm32f4xx_it.o: ..\Thread\include\rtthread.h
+.\obj\stm32f4xx_it.o: ..\Thread\drivers\board.h

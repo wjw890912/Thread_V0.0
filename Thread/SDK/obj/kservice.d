@@ -1,0 +1,10 @@
+.\obj\kservice.o: ..\Thread\src\kservice.c
+.\obj\kservice.o: ..\Thread\include\rtthread.h
+.\obj\kservice.o: ..\Thread\include\rtdef.h
+.\obj\kservice.o: ..\Thread\include\rtconfig.h
+.\obj\kservice.o: F:\Keil\ARM\RV31\INC\stdarg.h
+.\obj\kservice.o: ..\Thread\include\rtdebug.h
+.\obj\kservice.o: ..\Thread\include\rtservice.h
+.\obj\kservice.o: ..\Thread\include\rtm.h
+.\obj\kservice.o: ..\Thread\include\rtthread.h
+.\obj\kservice.o: ..\Thread\include\rthw.h

@@ -1,0 +1,9 @@
+.\obj\eefs_filesys.o: ..\eefs\drivers\standalone_driver\eefs_filesys.c
+.\obj\eefs_filesys.o: ..\eefs\inc\common_types.h
+.\obj\eefs_filesys.o: ..\eefs\inc\eefs_fileapi.h
+.\obj\eefs_filesys.o: ..\eefs\inc\eefs_config.h
+.\obj\eefs_filesys.o: ..\eefs\inc\eefs_version.h
+.\obj\eefs_filesys.o: F:\Keil\ARM\RV31\INC\stdio.h
+.\obj\eefs_filesys.o: F:\Keil\ARM\RV31\INC\time.h
+.\obj\eefs_filesys.o: ..\eefs\drivers\standalone_driver\eefs_filesys.h
+.\obj\eefs_filesys.o: F:\Keil\ARM\RV31\INC\string.h

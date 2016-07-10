@@ -1,0 +1,11 @@
+.\obj\startup.o: ..\Thread\applications\startup.c
+.\obj\startup.o: ..\Thread\include\rthw.h
+.\obj\startup.o: ..\Thread\include\rtthread.h
+.\obj\startup.o: ..\Thread\include\rtdef.h
+.\obj\startup.o: ..\Thread\include\rtconfig.h
+.\obj\startup.o: F:\Keil\ARM\RV31\INC\stdarg.h
+.\obj\startup.o: ..\Thread\include\rtdebug.h
+.\obj\startup.o: ..\Thread\include\rtservice.h
+.\obj\startup.o: ..\Thread\include\rtm.h
+.\obj\startup.o: ..\Thread\include\rtthread.h
+.\obj\startup.o: ..\Thread\drivers\board.h

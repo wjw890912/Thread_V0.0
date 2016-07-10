@@ -1,0 +1,2169 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;/******************************************************
+                       ************************
+    2 00000000         ; * @file     startup_NUC472_442.s
+    3 00000000         ; * @version  V1.00
+    4 00000000         ; * $Revision: 8 $
+    5 00000000         ; * $Date: 14/05/29 1:13p $ 
+    6 00000000         ; * @brief    CMSIS ARM Cortex-M4 Core Device Startup Fi
+                       le
+    7 00000000         ; *
+    8 00000000         ; * @note
+    9 00000000         ; * Copyright (C) 2013 Nuvoton Technology Corp. All righ
+                       ts reserved.
+   10 00000000         ;*******************************************************
+                       **********************/  
+   11 00000000         ;/*
+   12 00000000         ;//-------- <<< Use Configuration Wizard in Context Menu
+                        >>> ------------------
+   13 00000000         ;*/
+   14 00000000         
+   15 00000000         
+   16 00000000         ; <h> Stack Configuration
+   17 00000000         ;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+   18 00000000         ; </h>
+   19 00000000         
+   20 00000000 00000800 
+                       Stack_Size
+                               EQU              0x00000800
+   21 00000000         
+   22 00000000                 AREA             STACK, NOINIT, READWRITE, ALIGN
+=3
+   23 00000000         Stack_Mem
+                               SPACE            Stack_Size
+   24 00000800         __initial_sp
+   25 00000800         
+   26 00000800         
+   27 00000800         ; <h> Heap Configuration
+   28 00000800         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+   29 00000800         ; </h>
+   30 00000800         
+   31 00000800 00000100 
+                       Heap_Size
+                               EQU              0x00000100
+   32 00000800         
+   33 00000800                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
+3
+   34 00000000         __heap_base
+   35 00000000         Heap_Mem
+                               SPACE            Heap_Size
+   36 00000100         __heap_limit
+   37 00000100         
+   38 00000100         
+   39 00000100                 PRESERVE8
+   40 00000100                 THUMB
+   41 00000100         
+   42 00000100         
+   43 00000100         ; Vector Table Mapped to Address 0 at Reset
+   44 00000100         
+   45 00000100                 AREA             RESET, DATA, READONLY
+   46 00000000                 EXPORT           __Vectors
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   47 00000000                 EXPORT           __Vectors_End
+   48 00000000                 EXPORT           __Vectors_Size
+   49 00000000         
+   50 00000000 00000000 
+                       __Vectors
+                               DCD              __initial_sp ; Top of Stack
+   51 00000004 00000000        DCD              Reset_Handler ; Reset Handler
+   52 00000008 00000000        DCD              NMI_Handler ; NMI Handler
+   53 0000000C 00000000        DCD              HardFault_Handler ; Hard Fault 
+                                                            Handler
+   54 00000010 00000000        DCD              MemManage_Handler 
+                                                            ; MPU Fault Handler
+                                                            
+   55 00000014 00000000        DCD              BusFault_Handler 
+                                                            ; Bus Fault Handler
+                                                            
+   56 00000018 00000000        DCD              UsageFault_Handler ; Usage Faul
+                                                            t Handler
+   57 0000001C 00000000        DCD              0           ; Reserved
+   58 00000020 00000000        DCD              0           ; Reserved
+   59 00000024 00000000        DCD              0           ; Reserved
+   60 00000028 00000000        DCD              0           ; Reserved
+   61 0000002C 00000000        DCD              SVC_Handler ; SVCall Handler
+   62 00000030 00000000        DCD              DebugMon_Handler ; Debug Monito
+                                                            r Handler
+   63 00000034 00000000        DCD              0           ; Reserved
+   64 00000038 00000000        DCD              PendSV_Handler ; PendSV Handler
+                                                            
+   65 0000003C 00000000        DCD              SysTick_Handler 
+                                                            ; SysTick Handler
+   66 00000040         
+   67 00000040         ; External Interrupts
+   68 00000040 00000000        DCD              BOD_IRQHandler ; 0: Brown Out d
+                                                            etection
+   69 00000044 00000000        DCD              IRC_IRQHandler ; 1: Internal RC
+                                                            
+   70 00000048 00000000        DCD              PWRWU_IRQHandler ; 2: Power Dow
+                                                            n Wake Up 
+   71 0000004C 00000000        DCD              SRAMF_IRQHandler ; 3: Reserved.
+                                                            
+   72 00000050 00000000        DCD              CLKF_IRQHandler ; 4: CLKF
+   73 00000054 00000000        DCD              Default_Handler ; 5: Reserved.
+   74 00000058 00000000        DCD              RTC_IRQHandler ; 6: Real Time C
+                                                            lock 
+   75 0000005C 00000000        DCD              TAMPER_IRQHandler ; 7: Tamper d
+                                                            etection
+   76 00000060 00000000        DCD              EINT0_IRQHandler ; 8: External 
+                                                            Input 0
+   77 00000064 00000000        DCD              EINT1_IRQHandler ; 9: External 
+                                                            Input 1
+   78 00000068 00000000        DCD              EINT2_IRQHandler ; 10: External
+                                                             Input 2
+   79 0000006C 00000000        DCD              EINT3_IRQHandler ; 11: External
+                                                             Input 3
+   80 00000070 00000000        DCD              EINT4_IRQHandler ; 12: External
+                                                             Input 4
+   81 00000074 00000000        DCD              EINT5_IRQHandler ; 13: External
+                                                             Input 5
+   82 00000078 00000000        DCD              EINT6_IRQHandler ; 14: External
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+                                                             Input 6
+   83 0000007C 00000000        DCD              EINT7_IRQHandler ; 15: External
+                                                             Input 7 
+   84 00000080 00000000        DCD              GPA_IRQHandler 
+                                                            ; 16: GPIO Port A
+   85 00000084 00000000        DCD              GPB_IRQHandler 
+                                                            ; 17: GPIO Port B
+   86 00000088 00000000        DCD              GPC_IRQHandler 
+                                                            ; 18: GPIO Port C
+   87 0000008C 00000000        DCD              GPD_IRQHandler 
+                                                            ; 19: GPIO Port D
+   88 00000090 00000000        DCD              GPE_IRQHandler 
+                                                            ; 20: GPIO Port E
+   89 00000094 00000000        DCD              GPF_IRQHandler 
+                                                            ; 21: GPIO Port F
+   90 00000098 00000000        DCD              GPG_IRQHandler 
+                                                            ; 22: GPIO Port G
+   91 0000009C 00000000        DCD              GPH_IRQHandler 
+                                                            ; 23: GPIO Port H
+   92 000000A0 00000000        DCD              GPI_IRQHandler 
+                                                            ; 24: GPIO Port I
+   93 000000A4 00000000        DCD              Default_Handler ; 25: Reserved.
+                                                            
+   94 000000A8 00000000        DCD              Default_Handler ; 26: Reserved.
+                                                            
+   95 000000AC 00000000        DCD              Default_Handler ; 27: Reserved.
+                                                            
+   96 000000B0 00000000        DCD              Default_Handler ; 28: Reserved.
+                                                            
+   97 000000B4 00000000        DCD              Default_Handler ; 29: Reserved.
+                                                            
+   98 000000B8 00000000        DCD              Default_Handler ; 30: Reserved.
+                                                            
+   99 000000BC 00000000        DCD              Default_Handler ; 31: Reserved.
+                                                            
+  100 000000C0 00000000        DCD              TMR0_IRQHandler ; 32: Timer 0
+  101 000000C4 00000000        DCD              TMR1_IRQHandler ; 33: Timer 1
+  102 000000C8 00000000        DCD              TMR2_IRQHandler ; 34: Timer 2
+  103 000000CC 00000000        DCD              TMR3_IRQHandler ; 35: Timer 3
+  104 000000D0 00000000        DCD              Default_Handler ; 36: Reserved.
+                                                            
+  105 000000D4 00000000        DCD              Default_Handler ; 37: Reserved.
+                                                            
+  106 000000D8 00000000        DCD              Default_Handler ; 38: Reserved.
+                                                            
+  107 000000DC 00000000        DCD              Default_Handler ; 39: Reserved.
+                                                            
+  108 000000E0 00000000        DCD              PDMA_IRQHandler ; 40: Periphera
+                                                            l DMA
+  109 000000E4 00000000        DCD              Default_Handler ; 41: Reserved.
+                                                            
+  110 000000E8 00000000        DCD              ADC_IRQHandler ; 42: ADC
+  111 000000EC 00000000        DCD              Default_Handler ; 43: Reserved.
+                                                            
+  112 000000F0 00000000        DCD              Default_Handler ; 44: Reserved.
+                                                            
+  113 000000F4 00000000        DCD              Default_Handler ; 45: Reserved.
+                                                            
+  114 000000F8 00000000        DCD              WDT_IRQHandler ; 46: Watch Dog 
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+                                                            Timer
+  115 000000FC 00000000        DCD              WWDT_IRQHandler ; 47: Window Wa
+                                                            tch Dog Timer
+  116 00000100 00000000        DCD              EADC0_IRQHandler ; 48: EDAC 0
+  117 00000104 00000000        DCD              EADC1_IRQHandler ; 49: EDAC 1
+  118 00000108 00000000        DCD              EADC2_IRQHandler ; 50: EDAC 2
+  119 0000010C 00000000        DCD              EADC3_IRQHandler ; 51: EDAC 3
+  120 00000110 00000000        DCD              Default_Handler ; 52: Reserved.
+                                                            
+  121 00000114 00000000        DCD              Default_Handler ; 53: Reserved.
+                                                            
+  122 00000118 00000000        DCD              Default_Handler ; 54: Reserved.
+                                                            
+  123 0000011C 00000000        DCD              Default_Handler ; 55: Reserved.
+                                                            
+  124 00000120 00000000        DCD              ACMP_IRQHandler ; 56: Analog Co
+                                                            mparator
+  125 00000124 00000000        DCD              Default_Handler ; 57: Reserved.
+                                                            
+  126 00000128 00000000        DCD              Default_Handler ; 58: Reserved.
+                                                            
+  127 0000012C 00000000        DCD              Default_Handler ; 59: Reserved.
+                                                            
+  128 00000130 00000000        DCD              OPA0_IRQHandler ; 60: OPA 0
+  129 00000134 00000000        DCD              OPA1_IRQHandler ; 61: OPA 1
+  130 00000138 00000000        DCD              ICAP0_IRQHandler ; 62: ICAP 0
+  131 0000013C 00000000        DCD              ICAP1_IRQHandler ; 63: ICAP 1
+  132 00000140 00000000        DCD              PWM0CH0_IRQHandler 
+                                                            ; 64: PWM0 CH0
+  133 00000144 00000000        DCD              PWM0CH1_IRQHandler 
+                                                            ; 65: PWM0 CH1
+  134 00000148 00000000        DCD              PWM0CH2_IRQHandler 
+                                                            ; 66: PWM0 CH2
+  135 0000014C 00000000        DCD              PWM0CH3_IRQHandler 
+                                                            ; 67: PWM0 CH3
+  136 00000150 00000000        DCD              PWM0CH4_IRQHandler 
+                                                            ; 68: PWM0 CH4
+  137 00000154 00000000        DCD              PWM0CH5_IRQHandler 
+                                                            ; 69: PWM0 CH5
+  138 00000158 00000000        DCD              PWM0_BRK_IRQHandler 
+                                                            ; 70: PWM0 Break
+  139 0000015C 00000000        DCD              QEI0_IRQHandler ; 71: QEI 0
+  140 00000160 00000000        DCD              PWM1CH0_IRQHandler 
+                                                            ; 72: PWM1 CH0
+  141 00000164 00000000        DCD              PWM1CH1_IRQHandler 
+                                                            ; 73: PWM1 CH1
+  142 00000168 00000000        DCD              PWM1CH2_IRQHandler 
+                                                            ; 74: PWM1 CH2
+  143 0000016C 00000000        DCD              PWM1CH3_IRQHandler 
+                                                            ; 75: PWM1 CH3
+  144 00000170 00000000        DCD              PWM1CH4_IRQHandler 
+                                                            ; 76: PWM1 CH4
+  145 00000174 00000000        DCD              PWM1CH5_IRQHandler 
+                                                            ; 77: PWM1 CH5
+  146 00000178 00000000        DCD              PWM1_BRK_IRQHandler 
+                                                            ; 78: PWM1 Break
+  147 0000017C 00000000        DCD              QEI1_IRQHandler ; 79: QEI 1
+  148 00000180 00000000        DCD              EPWM0_IRQHandler ; 80: EPWM0
+  149 00000184 00000000        DCD              EPWM0BRK_IRQHandler 
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+                                                            ; 81: EPWM0 Break
+  150 00000188 00000000        DCD              EPWM1_IRQHandler ; 82: EPWM1
+  151 0000018C 00000000        DCD              EPWM1BRK_IRQHandler 
+                                                            ; 83: EPWM1 Break
+  152 00000190 00000000        DCD              Default_Handler ; 84: Reserved.
+                                                            
+  153 00000194 00000000        DCD              Default_Handler ; 85: Reserved.
+                                                            
+  154 00000198 00000000        DCD              Default_Handler ; 86: Reserved.
+                                                            
+  155 0000019C 00000000        DCD              Default_Handler ; 87: Reserved.
+                                                            
+  156 000001A0 00000000        DCD              USBD_IRQHandler 
+                                                            ; 88: USB Device
+  157 000001A4 00000000        DCD              USBH_IRQHandler ; 89: USB Host
+  158 000001A8 00000000        DCD              USB_OTG_IRQHandler 
+                                                            ; 90: USB OTG
+  159 000001AC 00000000        DCD              Default_Handler ; 91: Reserved.
+                                                            
+  160 000001B0 00000000        DCD              EMAC_TX_IRQHandler ; 92: Ethern
+                                                            et MAC TX
+  161 000001B4 00000000        DCD              EMAC_RX_IRQHandler ; 93: Ethern
+                                                            et MAC RX
+  162 000001B8 00000000        DCD              Default_Handler ; 94: Reserved.
+                                                            
+  163 000001BC 00000000        DCD              Default_Handler ; 95: Reserved.
+                                                            
+  164 000001C0 00000000        DCD              SPI0_IRQHandler ; 96: SPI 0
+  165 000001C4 00000000        DCD              SPI1_IRQHandler ; 97: SPI 1
+  166 000001C8 00000000        DCD              SPI2_IRQHandler ; 98: SPI 2
+  167 000001CC 00000000        DCD              SPI3_IRQHandler ; 99: SPI 3
+  168 000001D0 00000000        DCD              Default_Handler 
+                                                            ; 100: Reserved.
+  169 000001D4 00000000        DCD              Default_Handler 
+                                                            ; 101: Reserved.
+  170 000001D8 00000000        DCD              Default_Handler 
+                                                            ; 102: Reserved.
+  171 000001DC 00000000        DCD              Default_Handler 
+                                                            ; 103: Reserved.
+  172 000001E0 00000000        DCD              UART0_IRQHandler ; 104: UART 0
+  173 000001E4 00000000        DCD              UART1_IRQHandler ; 105: UART 1
+  174 000001E8 00000000        DCD              UART2_IRQHandler ; 106: UART 2
+  175 000001EC 00000000        DCD              UART3_IRQHandler ; 107: UART 3
+  176 000001F0 00000000        DCD              UART4_IRQHandler ; 108: UART 4
+  177 000001F4 00000000        DCD              UART5_IRQHandler ; 109: UART 5
+  178 000001F8 00000000        DCD              Default_Handler 
+                                                            ; 110: Reserved.
+  179 000001FC 00000000        DCD              Default_Handler 
+                                                            ; 111: Reserved.
+  180 00000200 00000000        DCD              I2C0_IRQHandler ; 112: I2C 0
+  181 00000204 00000000        DCD              I2C1_IRQHandler ; 113: I2C 1
+  182 00000208 00000000        DCD              I2C2_IRQHandler ; 114: I2C 2
+  183 0000020C 00000000        DCD              I2C3_IRQHandler ; 115: I2C 3
+  184 00000210 00000000        DCD              I2C4_IRQHandler ; 116: I2C 4
+  185 00000214 00000000        DCD              Default_Handler 
+                                                            ; 117: Reserved.
+  186 00000218 00000000        DCD              Default_Handler 
+                                                            ; 118: Reserved.
+  187 0000021C 00000000        DCD              Default_Handler 
+
+
+
+ARM Macro Assembler    Page 6 
+
+
+                                                            ; 119: Reserved.
+  188 00000220 00000000        DCD              SC0_IRQHandler 
+                                                            ; 120: Smart Card 0
+                                                            
+  189 00000224 00000000        DCD              SC1_IRQHandler 
+                                                            ; 121: Smart Card 1
+                                                            
+  190 00000228 00000000        DCD              SC2_IRQHandler 
+                                                            ; 122: Smart Card 2
+                                                            
+  191 0000022C 00000000        DCD              SC3_IRQHandler 
+                                                            ; 123: Smart Card 3
+                                                            
+  192 00000230 00000000        DCD              SC4_IRQHandler 
+                                                            ; 124: Smart Card 4
+                                                            
+  193 00000234 00000000        DCD              SC5_IRQHandler 
+                                                            ; 125: Smart Card 5
+                                                            
+  194 00000238 00000000        DCD              Default_Handler 
+                                                            ; 126: Reserved.
+  195 0000023C 00000000        DCD              Default_Handler 
+                                                            ; 127: Reserved.
+  196 00000240 00000000        DCD              CAN0_IRQHandler ; 128: CAN 0
+  197 00000244 00000000        DCD              CAN1_IRQHandler ; 129: CAN 1
+  198 00000248 00000000        DCD              Default_Handler 
+                                                            ; 130: Reserved.
+  199 0000024C 00000000        DCD              Default_Handler 
+                                                            ; 131: Reserved.
+  200 00000250 00000000        DCD              I2S0_IRQHandler ; 132: I2S 0
+  201 00000254 00000000        DCD              I2S1_IRQHandler ; 133: I2S 1
+  202 00000258 00000000        DCD              Default_Handler 
+                                                            ; 134: Reserved.
+  203 0000025C 00000000        DCD              Default_Handler 
+                                                            ; 135: Reserved.
+  204 00000260 00000000        DCD              SD_IRQHandler ; 136: SD card
+  205 00000264 00000000        DCD              Default_Handler 
+                                                            ; 137: Reserved.
+  206 00000268 00000000        DCD              PS2D_IRQHandler 
+                                                            ; 138: PS/2 device
+  207 0000026C 00000000        DCD              CAP_IRQHandler ; 139: VIN
+  208 00000270 00000000        DCD              CRYPTO_IRQHandler ; 140: CRYPTO
+                                                            
+  209 00000274 00000000        DCD              CRC_IRQHandler ; 141: CRC    
+  210 00000278         
+  211 00000278         __Vectors_End
+  212 00000278         
+  213 00000278 00000278 
+                       __Vectors_Size
+                               EQU              __Vectors_End - __Vectors
+  214 00000278         
+  215 00000278                 AREA             |.text|, CODE, READONLY
+  216 00000000         
+  217 00000000         
+  218 00000000         ; Reset Handler
+  219 00000000         
+  220 00000000         Reset_Handler
+                               PROC
+  221 00000000                 EXPORT           Reset_Handler             [WEAK
+
+
+
+ARM Macro Assembler    Page 7 
+
+
+]
+  222 00000000                 IMPORT           SystemInit
+  223 00000000                 IMPORT           __main
+  224 00000000         ; Unlock Register
+  225 00000000 4811            LDR              R0, =0x40000100
+  226 00000002 F04F 0159       LDR              R1, =0x59
+  227 00000006 6001            STR              R1, [R0]
+  228 00000008 F04F 0116       LDR              R1, =0x16
+  229 0000000C 6001            STR              R1, [R0]
+  230 0000000E F04F 0188       LDR              R1, =0x88
+  231 00000012 6001            STR              R1, [R0]
+  232 00000014         
+  233 00000014         ; Init POR
+  234 00000014 4A0D            LDR              R2, =0x40000024
+  235 00000016 F645 21A5       LDR              R1, =0x00005AA5
+  236 0000001A 6011            STR              R1, [R2]
+  237 0000001C         
+  238 0000001C         ; Lock register
+  239 0000001C 2100            MOVS             R1, #0
+  240 0000001E 6001            STR              R1, [R0]
+  241 00000020         
+  242 00000020 480B            LDR              R0, =SystemInit
+  243 00000022 4780            BLX              R0
+  244 00000024 480B            LDR              R0, =__main
+  245 00000026 4700            BX               R0
+  246 00000028                 ENDP
+  247 00000028         
+  248 00000028         
+  249 00000028         ; Dummy Exception Handlers (infinite loops which can be 
+                       modified)
+  250 00000028         
+  251 00000028         NMI_Handler
+                               PROC
+  252 00000028                 EXPORT           NMI_Handler               [WEAK
+]
+  253 00000028 E7FE            B                .
+  254 0000002A                 ENDP
+  256 0000002A         HardFault_Handler
+                               PROC
+  257 0000002A                 EXPORT           HardFault_Handler         [WEAK
+]
+  258 0000002A E7FE            B                .
+  259 0000002C                 ENDP
+  261 0000002C         MemManage_Handler
+                               PROC
+  262 0000002C                 EXPORT           MemManage_Handler         [WEAK
+]
+  263 0000002C E7FE            B                .
+  264 0000002E                 ENDP
+  266 0000002E         BusFault_Handler
+                               PROC
+  267 0000002E                 EXPORT           BusFault_Handler          [WEAK
+]
+  268 0000002E E7FE            B                .
+  269 00000030                 ENDP
+  271 00000030         UsageFault_Handler
+                               PROC
+  272 00000030                 EXPORT           UsageFault_Handler        [WEAK
+]
+
+
+
+ARM Macro Assembler    Page 8 
+
+
+  273 00000030 E7FE            B                .
+  274 00000032                 ENDP
+  275 00000032         SVC_Handler
+                               PROC
+  276 00000032                 EXPORT           SVC_Handler               [WEAK
+]
+  277 00000032 E7FE            B                .
+  278 00000034                 ENDP
+  280 00000034         DebugMon_Handler
+                               PROC
+  281 00000034                 EXPORT           DebugMon_Handler          [WEAK
+]
+  282 00000034 E7FE            B                .
+  283 00000036                 ENDP
+  285 00000036         PendSV_Handler
+                               PROC
+  286 00000036                 EXPORT           PendSV_Handler            [WEAK
+]
+  287 00000036 E7FE            B                .
+  288 00000038                 ENDP
+  290 00000038         SysTick_Handler
+                               PROC
+  291 00000038                 EXPORT           SysTick_Handler           [WEAK
+]
+  292 00000038 E7FE            B                .
+  293 0000003A                 ENDP
+  294 0000003A         
+  295 0000003A         Default_Handler
+                               PROC
+  296 0000003A         
+  297 0000003A                 EXPORT           BOD_IRQHandler            [WEAK
+]
+  298 0000003A                 EXPORT           IRC_IRQHandler            [WEAK
+]
+  299 0000003A                 EXPORT           PWRWU_IRQHandler          [WEAK
+]
+  300 0000003A                 EXPORT           SRAMF_IRQHandler          [WEAK
+]
+  301 0000003A                 EXPORT           CLKF_IRQHandler              [W
+EAK]
+  302 0000003A                 EXPORT           RTC_IRQHandler            [WEAK
+]
+  303 0000003A                 EXPORT           TAMPER_IRQHandler         [WEAK
+]
+  304 0000003A                 EXPORT           EINT0_IRQHandler          [WEAK
+]
+  305 0000003A                 EXPORT           EINT1_IRQHandler          [WEAK
+]
+  306 0000003A                 EXPORT           EINT2_IRQHandler          [WEAK
+]
+  307 0000003A                 EXPORT           EINT3_IRQHandler          [WEAK
+]
+  308 0000003A                 EXPORT           EINT4_IRQHandler          [WEAK
+]
+  309 0000003A                 EXPORT           EINT5_IRQHandler          [WEAK
+]
+  310 0000003A                 EXPORT           EINT6_IRQHandler          [WEAK
+]
+  311 0000003A                 EXPORT           EINT7_IRQHandler          [WEAK
+
+
+
+ARM Macro Assembler    Page 9 
+
+
+]
+  312 0000003A                 EXPORT           GPA_IRQHandler            [WEAK
+]
+  313 0000003A                 EXPORT           GPB_IRQHandler            [WEAK
+]
+  314 0000003A                 EXPORT           GPC_IRQHandler            [WEAK
+]
+  315 0000003A                 EXPORT           GPD_IRQHandler            [WEAK
+]
+  316 0000003A                 EXPORT           GPE_IRQHandler            [WEAK
+]
+  317 0000003A                 EXPORT           GPF_IRQHandler            [WEAK
+]
+  318 0000003A                 EXPORT           GPG_IRQHandler            [WEAK
+]
+  319 0000003A                 EXPORT           GPH_IRQHandler            [WEAK
+]
+  320 0000003A                 EXPORT           GPI_IRQHandler            [WEAK
+]
+  321 0000003A                 EXPORT           TMR0_IRQHandler           [WEAK
+]
+  322 0000003A                 EXPORT           TMR1_IRQHandler           [WEAK
+]
+  323 0000003A                 EXPORT           TMR2_IRQHandler           [WEAK
+]
+  324 0000003A                 EXPORT           TMR3_IRQHandler           [WEAK
+]
+  325 0000003A                 EXPORT           PDMA_IRQHandler           [WEAK
+]
+  326 0000003A                 EXPORT           ADC_IRQHandler            [WEAK
+]
+  327 0000003A                 EXPORT           WDT_IRQHandler            [WEAK
+]
+  328 0000003A                 EXPORT           WWDT_IRQHandler           [WEAK
+]
+  329 0000003A                 EXPORT           EADC0_IRQHandler          [WEAK
+]
+  330 0000003A                 EXPORT           EADC1_IRQHandler          [WEAK
+]
+  331 0000003A                 EXPORT           EADC2_IRQHandler          [WEAK
+]
+  332 0000003A                 EXPORT           EADC3_IRQHandler          [WEAK
+]
+  333 0000003A                 EXPORT           ACMP_IRQHandler           [WEAK
+]
+  334 0000003A                 EXPORT           OPA0_IRQHandler           [WEAK
+]
+  335 0000003A                 EXPORT           OPA1_IRQHandler           [WEAK
+]
+  336 0000003A                 EXPORT           ICAP0_IRQHandler          [WEAK
+]
+  337 0000003A                 EXPORT           ICAP1_IRQHandler          [WEAK
+]
+  338 0000003A                 EXPORT           PWM0CH0_IRQHandler        [WEAK
+]
+  339 0000003A                 EXPORT           PWM0CH1_IRQHandler        [WEAK
+]
+  340 0000003A                 EXPORT           PWM0CH2_IRQHandler        [WEAK
+]
+
+
+
+ARM Macro Assembler    Page 10 
+
+
+  341 0000003A                 EXPORT           PWM0CH3_IRQHandler        [WEAK
+]
+  342 0000003A                 EXPORT           PWM0CH4_IRQHandler        [WEAK
+]
+  343 0000003A                 EXPORT           PWM0CH5_IRQHandler        [WEAK
+]
+  344 0000003A                 EXPORT           PWM0_BRK_IRQHandler       [WEAK
+]
+  345 0000003A                 EXPORT           QEI0_IRQHandler           [WEAK
+]
+  346 0000003A                 EXPORT           PWM1CH0_IRQHandler        [WEAK
+]
+  347 0000003A                 EXPORT           PWM1CH1_IRQHandler        [WEAK
+]
+  348 0000003A                 EXPORT           PWM1CH2_IRQHandler        [WEAK
+]
+  349 0000003A                 EXPORT           PWM1CH3_IRQHandler        [WEAK
+]
+  350 0000003A                 EXPORT           PWM1CH4_IRQHandler        [WEAK
+]
+  351 0000003A                 EXPORT           PWM1CH5_IRQHandler        [WEAK
+]
+  352 0000003A                 EXPORT           PWM1_BRK_IRQHandler       [WEAK
+]
+  353 0000003A                 EXPORT           QEI1_IRQHandler           [WEAK
+]
+  354 0000003A                 EXPORT           EPWM0_IRQHandler          [WEAK
+]
+  355 0000003A                 EXPORT           EPWM0BRK_IRQHandler       [WEAK
+]
+  356 0000003A                 EXPORT           EPWM1_IRQHandler          [WEAK
+]
+  357 0000003A                 EXPORT           EPWM1BRK_IRQHandler       [WEAK
+]
+  358 0000003A                 EXPORT           USBD_IRQHandler           [WEAK
+]
+  359 0000003A                 EXPORT           USBH_IRQHandler           [WEAK
+]
+  360 0000003A                 EXPORT           USB_OTG_IRQHandler        [WEAK
+]
+  361 0000003A                 EXPORT           EMAC_TX_IRQHandler        [WEAK
+]
+  362 0000003A                 EXPORT           EMAC_RX_IRQHandler        [WEAK
+]
+  363 0000003A                 EXPORT           SPI0_IRQHandler           [WEAK
+]
+  364 0000003A                 EXPORT           SPI1_IRQHandler           [WEAK
+]
+  365 0000003A                 EXPORT           SPI2_IRQHandler           [WEAK
+]
+  366 0000003A                 EXPORT           SPI3_IRQHandler           [WEAK
+]
+  367 0000003A                 EXPORT           UART0_IRQHandler          [WEAK
+]
+  368 0000003A                 EXPORT           UART1_IRQHandler          [WEAK
+]
+  369 0000003A                 EXPORT           UART2_IRQHandler          [WEAK
+]
+  370 0000003A                 EXPORT           UART3_IRQHandler          [WEAK
+
+
+
+ARM Macro Assembler    Page 11 
+
+
+]
+  371 0000003A                 EXPORT           UART4_IRQHandler          [WEAK
+]
+  372 0000003A                 EXPORT           UART5_IRQHandler          [WEAK
+]
+  373 0000003A                 EXPORT           I2C0_IRQHandler           [WEAK
+]
+  374 0000003A                 EXPORT           I2C1_IRQHandler           [WEAK
+]
+  375 0000003A                 EXPORT           I2C2_IRQHandler           [WEAK
+]
+  376 0000003A                 EXPORT           I2C3_IRQHandler           [WEAK
+]
+  377 0000003A                 EXPORT           I2C4_IRQHandler           [WEAK
+]
+  378 0000003A                 EXPORT           SC0_IRQHandler            [WEAK
+]
+  379 0000003A                 EXPORT           SC1_IRQHandler            [WEAK
+]
+  380 0000003A                 EXPORT           SC2_IRQHandler            [WEAK
+]
+  381 0000003A                 EXPORT           SC3_IRQHandler            [WEAK
+]
+  382 0000003A                 EXPORT           SC4_IRQHandler            [WEAK
+]
+  383 0000003A                 EXPORT           SC5_IRQHandler            [WEAK
+]
+  384 0000003A                 EXPORT           CAN0_IRQHandler           [WEAK
+]
+  385 0000003A                 EXPORT           CAN1_IRQHandler           [WEAK
+]
+  386 0000003A                 EXPORT           I2S0_IRQHandler           [WEAK
+]
+  387 0000003A                 EXPORT           I2S1_IRQHandler           [WEAK
+]
+  388 0000003A                 EXPORT           SD_IRQHandler             [WEAK
+]
+  389 0000003A                 EXPORT           PS2D_IRQHandler           [WEAK
+]
+  390 0000003A                 EXPORT           CAP_IRQHandler            [WEAK
+]
+  391 0000003A                 EXPORT           CRYPTO_IRQHandler         [WEAK
+]
+  392 0000003A                 EXPORT           CRC_IRQHandler            [WEAK
+]
+  393 0000003A         
+  394 0000003A         Default__IRQHandler
+  395 0000003A         BOD_IRQHandler
+  396 0000003A         IRC_IRQHandler
+  397 0000003A         PWRWU_IRQHandler
+  398 0000003A         SRAMF_IRQHandler
+  399 0000003A         CLKF_IRQHandler
+  400 0000003A         RTC_IRQHandler
+  401 0000003A         TAMPER_IRQHandler
+  402 0000003A         EINT0_IRQHandler
+  403 0000003A         EINT1_IRQHandler
+  404 0000003A         EINT2_IRQHandler
+  405 0000003A         EINT3_IRQHandler
+  406 0000003A         EINT4_IRQHandler
+
+
+
+ARM Macro Assembler    Page 12 
+
+
+  407 0000003A         EINT5_IRQHandler
+  408 0000003A         EINT6_IRQHandler
+  409 0000003A         EINT7_IRQHandler
+  410 0000003A         GPA_IRQHandler
+  411 0000003A         GPB_IRQHandler
+  412 0000003A         GPC_IRQHandler
+  413 0000003A         GPD_IRQHandler
+  414 0000003A         GPE_IRQHandler
+  415 0000003A         GPF_IRQHandler
+  416 0000003A         GPG_IRQHandler
+  417 0000003A         GPH_IRQHandler
+  418 0000003A         GPI_IRQHandler
+  419 0000003A         TMR0_IRQHandler
+  420 0000003A         TMR1_IRQHandler
+  421 0000003A         TMR2_IRQHandler
+  422 0000003A         TMR3_IRQHandler
+  423 0000003A         PDMA_IRQHandler
+  424 0000003A         ADC_IRQHandler
+  425 0000003A         WDT_IRQHandler
+  426 0000003A         WWDT_IRQHandler
+  427 0000003A         EADC0_IRQHandler
+  428 0000003A         EADC1_IRQHandler
+  429 0000003A         EADC2_IRQHandler
+  430 0000003A         EADC3_IRQHandler
+  431 0000003A         ACMP_IRQHandler
+  432 0000003A         OPA0_IRQHandler
+  433 0000003A         OPA1_IRQHandler
+  434 0000003A         ICAP0_IRQHandler
+  435 0000003A         ICAP1_IRQHandler
+  436 0000003A         PWM0CH0_IRQHandler
+  437 0000003A         PWM0CH1_IRQHandler
+  438 0000003A         PWM0CH2_IRQHandler
+  439 0000003A         PWM0CH3_IRQHandler
+  440 0000003A         PWM0CH4_IRQHandler
+  441 0000003A         PWM0CH5_IRQHandler
+  442 0000003A         PWM0_BRK_IRQHandler
+  443 0000003A         QEI0_IRQHandler
+  444 0000003A         PWM1CH0_IRQHandler
+  445 0000003A         PWM1CH1_IRQHandler
+  446 0000003A         PWM1CH2_IRQHandler
+  447 0000003A         PWM1CH3_IRQHandler
+  448 0000003A         PWM1CH4_IRQHandler
+  449 0000003A         PWM1CH5_IRQHandler
+  450 0000003A         PWM1_BRK_IRQHandler
+  451 0000003A         QEI1_IRQHandler
+  452 0000003A         EPWM0_IRQHandler
+  453 0000003A         EPWM0BRK_IRQHandler
+  454 0000003A         EPWM1_IRQHandler
+  455 0000003A         EPWM1BRK_IRQHandler
+  456 0000003A         USBD_IRQHandler
+  457 0000003A         USBH_IRQHandler
+  458 0000003A         USB_OTG_IRQHandler
+  459 0000003A         EMAC_TX_IRQHandler
+  460 0000003A         EMAC_RX_IRQHandler
+  461 0000003A         SPI0_IRQHandler
+  462 0000003A         SPI1_IRQHandler
+  463 0000003A         SPI2_IRQHandler
+  464 0000003A         SPI3_IRQHandler
+  465 0000003A         UART0_IRQHandler
+
+
+
+ARM Macro Assembler    Page 13 
+
+
+  466 0000003A         UART1_IRQHandler
+  467 0000003A         UART2_IRQHandler
+  468 0000003A         UART3_IRQHandler
+  469 0000003A         UART4_IRQHandler
+  470 0000003A         UART5_IRQHandler
+  471 0000003A         I2C0_IRQHandler
+  472 0000003A         I2C1_IRQHandler
+  473 0000003A         I2C2_IRQHandler
+  474 0000003A         I2C3_IRQHandler
+  475 0000003A         I2C4_IRQHandler
+  476 0000003A         SC0_IRQHandler
+  477 0000003A         SC1_IRQHandler
+  478 0000003A         SC2_IRQHandler
+  479 0000003A         SC3_IRQHandler
+  480 0000003A         SC4_IRQHandler
+  481 0000003A         SC5_IRQHandler
+  482 0000003A         CAN0_IRQHandler
+  483 0000003A         CAN1_IRQHandler
+  484 0000003A         I2S0_IRQHandler
+  485 0000003A         I2S1_IRQHandler
+  486 0000003A         SD_IRQHandler
+  487 0000003A         PS2D_IRQHandler
+  488 0000003A         CAP_IRQHandler
+  489 0000003A         CRYPTO_IRQHandler
+  490 0000003A         CRC_IRQHandler
+  491 0000003A         
+  492 0000003A E7FE            B                .
+  493 0000003C                 ENDP
+  494 0000003C         
+  495 0000003C         
+  496 0000003C                 ALIGN
+  497 0000003C         
+  498 0000003C         
+  499 0000003C         ; User Initial Stack & Heap
+  500 0000003C         
+  501 0000003C                 IF               :DEF:__MICROLIB
+  508 0000003C         
+  509 0000003C                 IMPORT           __use_two_region_memory
+  510 0000003C                 EXPORT           __user_initial_stackheap
+  511 0000003C         
+  512 0000003C         __user_initial_stackheap
+                               PROC
+  513 0000003C 4806            LDR              R0, =  Heap_Mem
+  514 0000003E 4907            LDR              R1, =(Stack_Mem + Stack_Size)
+  515 00000040 4A07            LDR              R2, = (Heap_Mem +  Heap_Size)
+  516 00000042 4B08            LDR              R3, = Stack_Mem
+  517 00000044 4770            BX               LR
+  518 00000046                 ENDP
+  519 00000046         
+  520 00000046 00 00           ALIGN
+  521 00000048         
+  522 00000048                 ENDIF
+  523 00000048         
+  524 00000048         
+  525 00000048         
+  526 00000048                 END
+              40000100 
+              40000024 
+              00000000 
+
+
+
+ARM Macro Assembler    Page 14 
+
+
+              00000000 
+              00000000 
+              00000800 
+              00000100 
+              00000000 
+Command Line: --16 --debug --xref --cpu=Cortex-M4.fp --apcs=interwork -o.\obj\s
+tartup_NUC472_442.o -IF:\Keil\ARM\INC -IF:\Keil\ARM\INC\Nuvoton --list=.\list\s
+tartup_NUC472_442.lst ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+STACK 00000000
+
+Symbol: STACK
+   Definitions
+      At line 22 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      None
+Comment: STACK unused
+Stack_Mem 00000000
+
+Symbol: Stack_Mem
+   Definitions
+      At line 23 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 514 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 516 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+__initial_sp 00000800
+
+Symbol: __initial_sp
+   Definitions
+      At line 24 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 50 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+Comment: __initial_sp used once
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+HEAP 00000000
+
+Symbol: HEAP
+   Definitions
+      At line 33 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      None
+Comment: HEAP unused
+Heap_Mem 00000000
+
+Symbol: Heap_Mem
+   Definitions
+      At line 35 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 513 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 515 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+__heap_base 00000000
+
+Symbol: __heap_base
+   Definitions
+      At line 34 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      None
+Comment: __heap_base unused
+__heap_limit 00000100
+
+Symbol: __heap_limit
+   Definitions
+      At line 36 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      None
+Comment: __heap_limit unused
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 45 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 50 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 46 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 213 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+__Vectors_End 00000278
+
+Symbol: __Vectors_End
+   Definitions
+      At line 211 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 47 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 213 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 215 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      None
+Comment: .text unused
+ACMP_IRQHandler 0000003A
+
+Symbol: ACMP_IRQHandler
+   Definitions
+      At line 431 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 124 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 333 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+ADC_IRQHandler 0000003A
+
+Symbol: ADC_IRQHandler
+   Definitions
+      At line 424 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 110 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 326 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+BOD_IRQHandler 0000003A
+
+Symbol: BOD_IRQHandler
+   Definitions
+      At line 395 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 68 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 297 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+BusFault_Handler 0000002E
+
+Symbol: BusFault_Handler
+   Definitions
+      At line 266 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 55 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 267 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+CAN0_IRQHandler 0000003A
+
+Symbol: CAN0_IRQHandler
+   Definitions
+      At line 482 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 196 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 384 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+CAN1_IRQHandler 0000003A
+
+Symbol: CAN1_IRQHandler
+   Definitions
+      At line 483 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 197 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 385 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+CAP_IRQHandler 0000003A
+
+Symbol: CAP_IRQHandler
+   Definitions
+      At line 488 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 207 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 390 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+CLKF_IRQHandler 0000003A
+
+Symbol: CLKF_IRQHandler
+   Definitions
+      At line 399 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 72 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 301 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+CRC_IRQHandler 0000003A
+
+Symbol: CRC_IRQHandler
+   Definitions
+      At line 490 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 209 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 392 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+CRYPTO_IRQHandler 0000003A
+
+Symbol: CRYPTO_IRQHandler
+   Definitions
+      At line 489 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 208 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 391 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+DebugMon_Handler 00000034
+
+Symbol: DebugMon_Handler
+   Definitions
+      At line 280 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 62 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 281 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+Default_Handler 0000003A
+
+Symbol: Default_Handler
+   Definitions
+      At line 295 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 73 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 93 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 94 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 95 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 96 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+
+
+ARM Macro Assembler    Page 3 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 97 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 98 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 99 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 104 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 105 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 106 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 107 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 109 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 111 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 112 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 113 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 120 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 121 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 122 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 123 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 125 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 126 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 127 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 152 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 153 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 154 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 155 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 159 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 162 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 163 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 168 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 169 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 170 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 171 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 178 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 179 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 185 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 186 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 187 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 194 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 195 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 198 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 199 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 202 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 203 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 205 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+Default__IRQHandler 0000003A
+
+Symbol: Default__IRQHandler
+   Definitions
+      At line 394 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      None
+Comment: Default__IRQHandler unused
+EADC0_IRQHandler 0000003A
+
+Symbol: EADC0_IRQHandler
+   Definitions
+      At line 427 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 116 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 329 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+
+
+
+ARM Macro Assembler    Page 4 Alphabetic symbol ordering
+Relocatable symbols
+
+EADC1_IRQHandler 0000003A
+
+Symbol: EADC1_IRQHandler
+   Definitions
+      At line 428 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 117 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 330 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EADC2_IRQHandler 0000003A
+
+Symbol: EADC2_IRQHandler
+   Definitions
+      At line 429 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 118 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 331 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EADC3_IRQHandler 0000003A
+
+Symbol: EADC3_IRQHandler
+   Definitions
+      At line 430 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 119 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 332 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EINT0_IRQHandler 0000003A
+
+Symbol: EINT0_IRQHandler
+   Definitions
+      At line 402 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 76 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 304 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EINT1_IRQHandler 0000003A
+
+Symbol: EINT1_IRQHandler
+   Definitions
+      At line 403 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 77 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 305 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EINT2_IRQHandler 0000003A
+
+Symbol: EINT2_IRQHandler
+   Definitions
+      At line 404 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 78 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 306 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EINT3_IRQHandler 0000003A
+
+Symbol: EINT3_IRQHandler
+   Definitions
+      At line 405 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+
+
+ARM Macro Assembler    Page 5 Alphabetic symbol ordering
+Relocatable symbols
+
+   Uses
+      At line 79 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 307 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EINT4_IRQHandler 0000003A
+
+Symbol: EINT4_IRQHandler
+   Definitions
+      At line 406 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 80 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 308 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EINT5_IRQHandler 0000003A
+
+Symbol: EINT5_IRQHandler
+   Definitions
+      At line 407 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 81 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 309 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EINT6_IRQHandler 0000003A
+
+Symbol: EINT6_IRQHandler
+   Definitions
+      At line 408 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 82 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 310 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EINT7_IRQHandler 0000003A
+
+Symbol: EINT7_IRQHandler
+   Definitions
+      At line 409 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 83 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 311 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EMAC_RX_IRQHandler 0000003A
+
+Symbol: EMAC_RX_IRQHandler
+   Definitions
+      At line 460 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 161 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 362 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EMAC_TX_IRQHandler 0000003A
+
+Symbol: EMAC_TX_IRQHandler
+   Definitions
+      At line 459 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 160 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 361 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EPWM0BRK_IRQHandler 0000003A
+
+
+
+ARM Macro Assembler    Page 6 Alphabetic symbol ordering
+Relocatable symbols
+
+
+Symbol: EPWM0BRK_IRQHandler
+   Definitions
+      At line 453 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 149 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 355 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EPWM0_IRQHandler 0000003A
+
+Symbol: EPWM0_IRQHandler
+   Definitions
+      At line 452 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 148 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 354 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EPWM1BRK_IRQHandler 0000003A
+
+Symbol: EPWM1BRK_IRQHandler
+   Definitions
+      At line 455 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 151 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 357 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+EPWM1_IRQHandler 0000003A
+
+Symbol: EPWM1_IRQHandler
+   Definitions
+      At line 454 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 150 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 356 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+GPA_IRQHandler 0000003A
+
+Symbol: GPA_IRQHandler
+   Definitions
+      At line 410 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 84 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 312 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+GPB_IRQHandler 0000003A
+
+Symbol: GPB_IRQHandler
+   Definitions
+      At line 411 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 85 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 313 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+GPC_IRQHandler 0000003A
+
+Symbol: GPC_IRQHandler
+   Definitions
+      At line 412 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+
+
+
+ARM Macro Assembler    Page 7 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 86 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 314 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+GPD_IRQHandler 0000003A
+
+Symbol: GPD_IRQHandler
+   Definitions
+      At line 413 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 87 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 315 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+GPE_IRQHandler 0000003A
+
+Symbol: GPE_IRQHandler
+   Definitions
+      At line 414 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 88 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 316 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+GPF_IRQHandler 0000003A
+
+Symbol: GPF_IRQHandler
+   Definitions
+      At line 415 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 89 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 317 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+GPG_IRQHandler 0000003A
+
+Symbol: GPG_IRQHandler
+   Definitions
+      At line 416 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 90 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 318 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+GPH_IRQHandler 0000003A
+
+Symbol: GPH_IRQHandler
+   Definitions
+      At line 417 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 91 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 319 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+GPI_IRQHandler 0000003A
+
+Symbol: GPI_IRQHandler
+   Definitions
+      At line 418 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 92 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 320 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+HardFault_Handler 0000002A
+
+
+
+
+ARM Macro Assembler    Page 8 Alphabetic symbol ordering
+Relocatable symbols
+
+Symbol: HardFault_Handler
+   Definitions
+      At line 256 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 53 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 257 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+I2C0_IRQHandler 0000003A
+
+Symbol: I2C0_IRQHandler
+   Definitions
+      At line 471 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 180 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 373 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+I2C1_IRQHandler 0000003A
+
+Symbol: I2C1_IRQHandler
+   Definitions
+      At line 472 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 181 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 374 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+I2C2_IRQHandler 0000003A
+
+Symbol: I2C2_IRQHandler
+   Definitions
+      At line 473 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 182 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 375 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+I2C3_IRQHandler 0000003A
+
+Symbol: I2C3_IRQHandler
+   Definitions
+      At line 474 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 183 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 376 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+I2C4_IRQHandler 0000003A
+
+Symbol: I2C4_IRQHandler
+   Definitions
+      At line 475 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 184 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 377 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+I2S0_IRQHandler 0000003A
+
+Symbol: I2S0_IRQHandler
+   Definitions
+      At line 484 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 200 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+
+
+ARM Macro Assembler    Page 9 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 386 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+I2S1_IRQHandler 0000003A
+
+Symbol: I2S1_IRQHandler
+   Definitions
+      At line 485 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 201 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 387 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+ICAP0_IRQHandler 0000003A
+
+Symbol: ICAP0_IRQHandler
+   Definitions
+      At line 434 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 130 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 336 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+ICAP1_IRQHandler 0000003A
+
+Symbol: ICAP1_IRQHandler
+   Definitions
+      At line 435 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 131 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 337 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+IRC_IRQHandler 0000003A
+
+Symbol: IRC_IRQHandler
+   Definitions
+      At line 396 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 69 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 298 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+MemManage_Handler 0000002C
+
+Symbol: MemManage_Handler
+   Definitions
+      At line 261 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 54 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 262 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+NMI_Handler 00000028
+
+Symbol: NMI_Handler
+   Definitions
+      At line 251 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 52 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 252 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+OPA0_IRQHandler 0000003A
+
+Symbol: OPA0_IRQHandler
+
+
+
+ARM Macro Assembler    Page 10 Alphabetic symbol ordering
+Relocatable symbols
+
+   Definitions
+      At line 432 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 128 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 334 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+OPA1_IRQHandler 0000003A
+
+Symbol: OPA1_IRQHandler
+   Definitions
+      At line 433 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 129 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 335 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PDMA_IRQHandler 0000003A
+
+Symbol: PDMA_IRQHandler
+   Definitions
+      At line 423 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 108 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 325 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PS2D_IRQHandler 0000003A
+
+Symbol: PS2D_IRQHandler
+   Definitions
+      At line 487 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 206 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 389 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWM0CH0_IRQHandler 0000003A
+
+Symbol: PWM0CH0_IRQHandler
+   Definitions
+      At line 436 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 132 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 338 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWM0CH1_IRQHandler 0000003A
+
+Symbol: PWM0CH1_IRQHandler
+   Definitions
+      At line 437 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 133 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 339 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWM0CH2_IRQHandler 0000003A
+
+Symbol: PWM0CH2_IRQHandler
+   Definitions
+      At line 438 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 134 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 340 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+
+
+ARM Macro Assembler    Page 11 Alphabetic symbol ordering
+Relocatable symbols
+
+
+PWM0CH3_IRQHandler 0000003A
+
+Symbol: PWM0CH3_IRQHandler
+   Definitions
+      At line 439 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 135 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 341 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWM0CH4_IRQHandler 0000003A
+
+Symbol: PWM0CH4_IRQHandler
+   Definitions
+      At line 440 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 136 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 342 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWM0CH5_IRQHandler 0000003A
+
+Symbol: PWM0CH5_IRQHandler
+   Definitions
+      At line 441 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 137 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 343 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWM0_BRK_IRQHandler 0000003A
+
+Symbol: PWM0_BRK_IRQHandler
+   Definitions
+      At line 442 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 138 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 344 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWM1CH0_IRQHandler 0000003A
+
+Symbol: PWM1CH0_IRQHandler
+   Definitions
+      At line 444 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 140 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 346 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWM1CH1_IRQHandler 0000003A
+
+Symbol: PWM1CH1_IRQHandler
+   Definitions
+      At line 445 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 141 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 347 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWM1CH2_IRQHandler 0000003A
+
+Symbol: PWM1CH2_IRQHandler
+   Definitions
+
+
+
+ARM Macro Assembler    Page 12 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 446 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 142 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 348 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWM1CH3_IRQHandler 0000003A
+
+Symbol: PWM1CH3_IRQHandler
+   Definitions
+      At line 447 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 143 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 349 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWM1CH4_IRQHandler 0000003A
+
+Symbol: PWM1CH4_IRQHandler
+   Definitions
+      At line 448 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 144 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 350 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWM1CH5_IRQHandler 0000003A
+
+Symbol: PWM1CH5_IRQHandler
+   Definitions
+      At line 449 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 145 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 351 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWM1_BRK_IRQHandler 0000003A
+
+Symbol: PWM1_BRK_IRQHandler
+   Definitions
+      At line 450 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 146 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 352 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PWRWU_IRQHandler 0000003A
+
+Symbol: PWRWU_IRQHandler
+   Definitions
+      At line 397 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 70 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 299 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+PendSV_Handler 00000036
+
+Symbol: PendSV_Handler
+   Definitions
+      At line 285 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 64 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 286 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+
+
+
+ARM Macro Assembler    Page 13 Alphabetic symbol ordering
+Relocatable symbols
+
+QEI0_IRQHandler 0000003A
+
+Symbol: QEI0_IRQHandler
+   Definitions
+      At line 443 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 139 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 345 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+QEI1_IRQHandler 0000003A
+
+Symbol: QEI1_IRQHandler
+   Definitions
+      At line 451 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 147 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 353 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+RTC_IRQHandler 0000003A
+
+Symbol: RTC_IRQHandler
+   Definitions
+      At line 400 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 74 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 302 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 220 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 51 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 221 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SC0_IRQHandler 0000003A
+
+Symbol: SC0_IRQHandler
+   Definitions
+      At line 476 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 188 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 378 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SC1_IRQHandler 0000003A
+
+Symbol: SC1_IRQHandler
+   Definitions
+      At line 477 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 189 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 379 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SC2_IRQHandler 0000003A
+
+Symbol: SC2_IRQHandler
+   Definitions
+      At line 478 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+
+
+ARM Macro Assembler    Page 14 Alphabetic symbol ordering
+Relocatable symbols
+
+   Uses
+      At line 190 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 380 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SC3_IRQHandler 0000003A
+
+Symbol: SC3_IRQHandler
+   Definitions
+      At line 479 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 191 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 381 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SC4_IRQHandler 0000003A
+
+Symbol: SC4_IRQHandler
+   Definitions
+      At line 480 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 192 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 382 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SC5_IRQHandler 0000003A
+
+Symbol: SC5_IRQHandler
+   Definitions
+      At line 481 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 193 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 383 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SD_IRQHandler 0000003A
+
+Symbol: SD_IRQHandler
+   Definitions
+      At line 486 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 204 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 388 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SPI0_IRQHandler 0000003A
+
+Symbol: SPI0_IRQHandler
+   Definitions
+      At line 461 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 164 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 363 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SPI1_IRQHandler 0000003A
+
+Symbol: SPI1_IRQHandler
+   Definitions
+      At line 462 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 165 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 364 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SPI2_IRQHandler 0000003A
+
+
+
+ARM Macro Assembler    Page 15 Alphabetic symbol ordering
+Relocatable symbols
+
+
+Symbol: SPI2_IRQHandler
+   Definitions
+      At line 463 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 166 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 365 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SPI3_IRQHandler 0000003A
+
+Symbol: SPI3_IRQHandler
+   Definitions
+      At line 464 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 167 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 366 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SRAMF_IRQHandler 0000003A
+
+Symbol: SRAMF_IRQHandler
+   Definitions
+      At line 398 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 71 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 300 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SVC_Handler 00000032
+
+Symbol: SVC_Handler
+   Definitions
+      At line 275 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 61 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 276 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+SysTick_Handler 00000038
+
+Symbol: SysTick_Handler
+   Definitions
+      At line 290 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 65 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 291 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+TAMPER_IRQHandler 0000003A
+
+Symbol: TAMPER_IRQHandler
+   Definitions
+      At line 401 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 75 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 303 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+TMR0_IRQHandler 0000003A
+
+Symbol: TMR0_IRQHandler
+   Definitions
+      At line 419 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+
+
+
+ARM Macro Assembler    Page 16 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 100 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 321 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+TMR1_IRQHandler 0000003A
+
+Symbol: TMR1_IRQHandler
+   Definitions
+      At line 420 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 101 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 322 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+TMR2_IRQHandler 0000003A
+
+Symbol: TMR2_IRQHandler
+   Definitions
+      At line 421 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 102 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 323 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+TMR3_IRQHandler 0000003A
+
+Symbol: TMR3_IRQHandler
+   Definitions
+      At line 422 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 103 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 324 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+UART0_IRQHandler 0000003A
+
+Symbol: UART0_IRQHandler
+   Definitions
+      At line 465 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 172 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 367 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+UART1_IRQHandler 0000003A
+
+Symbol: UART1_IRQHandler
+   Definitions
+      At line 466 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 173 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 368 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+UART2_IRQHandler 0000003A
+
+Symbol: UART2_IRQHandler
+   Definitions
+      At line 467 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 174 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 369 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+UART3_IRQHandler 0000003A
+
+
+
+
+ARM Macro Assembler    Page 17 Alphabetic symbol ordering
+Relocatable symbols
+
+Symbol: UART3_IRQHandler
+   Definitions
+      At line 468 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 175 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 370 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+UART4_IRQHandler 0000003A
+
+Symbol: UART4_IRQHandler
+   Definitions
+      At line 469 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 176 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 371 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+UART5_IRQHandler 0000003A
+
+Symbol: UART5_IRQHandler
+   Definitions
+      At line 470 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 177 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 372 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+USBD_IRQHandler 0000003A
+
+Symbol: USBD_IRQHandler
+   Definitions
+      At line 456 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 156 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 358 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+USBH_IRQHandler 0000003A
+
+Symbol: USBH_IRQHandler
+   Definitions
+      At line 457 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 157 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 359 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+USB_OTG_IRQHandler 0000003A
+
+Symbol: USB_OTG_IRQHandler
+   Definitions
+      At line 458 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 158 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 360 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+UsageFault_Handler 00000030
+
+Symbol: UsageFault_Handler
+   Definitions
+      At line 271 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 56 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+
+
+ARM Macro Assembler    Page 18 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 272 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+WDT_IRQHandler 0000003A
+
+Symbol: WDT_IRQHandler
+   Definitions
+      At line 425 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 114 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 327 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+WWDT_IRQHandler 0000003A
+
+Symbol: WWDT_IRQHandler
+   Definitions
+      At line 426 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 115 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 328 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+__user_initial_stackheap 0000003C
+
+Symbol: __user_initial_stackheap
+   Definitions
+      At line 512 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 510 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+Comment: __user_initial_stackheap used once
+110 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+Heap_Size 00000100
+
+Symbol: Heap_Size
+   Definitions
+      At line 31 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 35 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 515 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+Stack_Size 00000800
+
+Symbol: Stack_Size
+   Definitions
+      At line 20 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 23 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+      At line 514 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+
+__Vectors_Size 00000278
+
+Symbol: __Vectors_Size
+   Definitions
+      At line 213 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 48 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+Comment: __Vectors_Size used once
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+SystemInit 00000000
+
+Symbol: SystemInit
+   Definitions
+      At line 222 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 242 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+Comment: SystemInit used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 223 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      At line 244 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+Comment: __main used once
+__use_two_region_memory 00000000
+
+Symbol: __use_two_region_memory
+   Definitions
+      At line 509 in file ..\CMIS\Source\ARM\startup_NUC472_442.s
+   Uses
+      None
+Comment: __use_two_region_memory unused
+3 symbols
+448 symbols in table

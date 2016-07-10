@@ -1,0 +1,10 @@
+.\obj\slab.o: ..\Thread\src\slab.c
+.\obj\slab.o: ..\Thread\include\rthw.h
+.\obj\slab.o: ..\Thread\include\rtthread.h
+.\obj\slab.o: ..\Thread\include\rtdef.h
+.\obj\slab.o: ..\Thread\include\rtconfig.h
+.\obj\slab.o: F:\Keil\ARM\RV31\INC\stdarg.h
+.\obj\slab.o: ..\Thread\include\rtdebug.h
+.\obj\slab.o: ..\Thread\include\rtservice.h
+.\obj\slab.o: ..\Thread\include\rtm.h
+.\obj\slab.o: ..\Thread\include\rtthread.h

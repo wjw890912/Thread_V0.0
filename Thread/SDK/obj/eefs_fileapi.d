@@ -1,0 +1,11 @@
+.\obj\eefs_fileapi.o: ..\eefs\libraries\eepromfs\eefs_fileapi.c
+.\obj\eefs_fileapi.o: ..\eefs\inc\common_types.h
+.\obj\eefs_fileapi.o: ..\eefs\inc\eefs_fileapi.h
+.\obj\eefs_fileapi.o: ..\eefs\inc\eefs_config.h
+.\obj\eefs_fileapi.o: ..\eefs\inc\eefs_version.h
+.\obj\eefs_fileapi.o: F:\Keil\ARM\RV31\INC\stdio.h
+.\obj\eefs_fileapi.o: F:\Keil\ARM\RV31\INC\time.h
+.\obj\eefs_fileapi.o: ..\eefs\drivers\standalone_driver\eefs_macros.h
+.\obj\eefs_fileapi.o: F:\Keil\ARM\RV31\INC\string.h
+.\obj\eefs_fileapi.o: F:\Keil\ARM\RV31\INC\math.h
+.\obj\eefs_fileapi.o: ..\eefs\inc\fcntl.h

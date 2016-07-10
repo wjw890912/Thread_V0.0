@@ -1,0 +1,9 @@
+.\obj\microeefs.o: ..\eefs\libraries\microeefs\microeefs.c
+.\obj\microeefs.o: ..\eefs\inc\eefs_fileapi.h
+.\obj\microeefs.o: ..\eefs\inc\common_types.h
+.\obj\microeefs.o: ..\eefs\inc\eefs_config.h
+.\obj\microeefs.o: ..\eefs\inc\eefs_version.h
+.\obj\microeefs.o: F:\Keil\ARM\RV31\INC\stdio.h
+.\obj\microeefs.o: F:\Keil\ARM\RV31\INC\time.h
+.\obj\microeefs.o: ..\eefs\drivers\standalone_driver\eefs_macros.h
+.\obj\microeefs.o: F:\Keil\ARM\RV31\INC\string.h

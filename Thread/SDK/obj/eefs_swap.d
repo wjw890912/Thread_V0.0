@@ -1,0 +1,10 @@
+.\obj\eefs_swap.o: ..\eefs\tools\eefstool\src\eefs_swap.c
+.\obj\eefs_swap.o: ..\eefs\inc\common_types.h
+.\obj\eefs_swap.o: ..\eefs\inc\eefs_fileapi.h
+.\obj\eefs_swap.o: ..\eefs\inc\eefs_config.h
+.\obj\eefs_swap.o: ..\eefs\inc\eefs_version.h
+.\obj\eefs_swap.o: E:\Keil\ARM\RV31\INC\stdio.h
+.\obj\eefs_swap.o: E:\Keil\ARM\RV31\INC\time.h
+.\obj\eefs_swap.o: E:\Keil\ARM\RV31\INC\stdarg.h
+.\obj\eefs_swap.o: E:\Keil\ARM\RV31\INC\stdlib.h
+.\obj\eefs_swap.o: E:\Keil\ARM\RV31\INC\errno.h

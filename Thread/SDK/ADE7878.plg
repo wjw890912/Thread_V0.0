@@ -1,0 +1,162 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+D:\王均伟\电能\ADE7878_NUC422_Softwave\SDK\ADE7878.uvproj
+Project File Date:  01/02/2016
+
+<h2>Output:</h2>
+Build target 'ADE7878'
+compiling ADE7878_Int.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\app\src\ADE7878_Int.c: 0 warnings, 1 error
+compiling main.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\app\src\main.c: 0 warnings, 1 error
+compiling acmp.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\acmp.c: 0 warnings, 1 error
+compiling adc.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\adc.c: 0 warnings, 1 error
+compiling can.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\can.c: 0 warnings, 1 error
+compiling cap.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\cap.c: 0 warnings, 1 error
+compiling clk.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\clk.c: 0 warnings, 1 error
+compiling crypto.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\crypto.c: 0 warnings, 1 error
+compiling ebi.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\ebi.c: 0 warnings, 1 error
+compiling emac.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\emac.c: 0 warnings, 1 error
+compiling fmc.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\fmc.c: 0 warnings, 1 error
+compiling gpio.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\gpio.c: 0 warnings, 1 error
+compiling i2c.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\i2c.c: 0 warnings, 1 error
+compiling i2s.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\i2s.c: 0 warnings, 1 error
+compiling pdma.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\pdma.c: 0 warnings, 1 error
+compiling ps2.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\ps2.c: 0 warnings, 1 error
+compiling pwm.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\pwm.c: 0 warnings, 1 error
+compiling retarget.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\retarget.c: 0 warnings, 1 error
+compiling rtc.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\rtc.c: 0 warnings, 1 error
+compiling sc.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\sc.c: 0 warnings, 1 error
+compiling scuart.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\scuart.c: 0 warnings, 1 error
+compiling sd.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\sd.c: 0 warnings, 1 error
+compiling spi.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\spi.c: 0 warnings, 1 error
+compiling sys.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\sys.c: 0 warnings, 1 error
+compiling timer.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\timer.c: 0 warnings, 1 error
+compiling uart.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\uart.c: 0 warnings, 1 error
+compiling usbd.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\usbd.c: 0 warnings, 1 error
+compiling wdt.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\wdt.c: 0 warnings, 1 error
+compiling wwdt.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\lib\src\wwdt.c: 0 warnings, 1 error
+compiling system_NUC472_442.c...
+..\CMIS\Include\NUC472_442.h(248): error:  #5: cannot open source input file "core_cm4.h": No such file or directory
+..\CMIS\Include\NUC472_442.h:   #include "core_cm4.h"                       /* Cortex-M4 processor and core peripherals           */
+..\CMIS\Include\NUC472_442.h:                                                                                                       ^
+..\CMIS\Include\NUC472_442.h: ..\CMIS\Source\system_NUC472_442.c: 0 warnings, 1 error
+assembling startup_NUC472_442.s...
+Target not created

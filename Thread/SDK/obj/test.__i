@@ -1,0 +1,1 @@
+-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ADE7878\inc -I..\app\inc -I..\CMIS\CMSIS\Include -I..\lib\inc -I..\CMIS\Include -I "E:\Keil\ARM\INC" -I "E:\Keil\ARM\INC\Nuvoton" -DRVDS_ARMCM4_NUC4xx -o ".\obj\test.o" --omf_browse ".\obj\test.crf" --depend ".\obj\test.d" "..\ADE7878\src\Test.c"

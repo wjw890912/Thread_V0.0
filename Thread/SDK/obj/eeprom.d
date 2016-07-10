@@ -1,0 +1,9 @@
+.\obj\eeprom.o: ..\eefs\eeprom\eeprom.c
+.\obj\eeprom.o: ..\eefs\inc\common_types.h
+.\obj\eeprom.o: ..\eefs\inc\eefs_fileapi.h
+.\obj\eeprom.o: ..\eefs\inc\eefs_config.h
+.\obj\eeprom.o: ..\eefs\inc\eefs_version.h
+.\obj\eeprom.o: F:\Keil\ARM\RV31\INC\stdio.h
+.\obj\eeprom.o: F:\Keil\ARM\RV31\INC\time.h
+.\obj\eeprom.o: ..\eefs\drivers\standalone_driver\eefs_macros.h
+.\obj\eeprom.o: F:\Keil\ARM\RV31\INC\string.h
